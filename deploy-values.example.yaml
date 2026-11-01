@@ -1,0 +1,46 @@
+# Example values used to deploy with an existing save.
+# If importing a save deploy with the SAVE_PATH zarf var set (see the README) to import a save into the PVC. Subsequent deploys can leave that variable unset
+factorio:
+  factorioServer:
+    save_name: your save name
+    generate_new_save: false
+    load_latest_save: true
+    update_mods_on_start: false
+  admin_list:
+    - your-ingame-username
+  rcon:
+    external: false
+    password: ""
+  server_settings:
+    name: MyDedicatedServerName
+    visibility:
+      public: true # List server on public server list in game. False requires direct connection
+      lan: true
+    description: "My awesome dedicated server description"
+    tags:
+      - modded
+      - LTN
+      - whatever
+    require_user_verification: true
+  serverPassword:
+    # Set your own game password before exposing the server publicly.
+    game_password: ""
+  persistence:
+    dataDir:
+      Size: 5Gi
+  service:
+    type: NodePort
+    port: 31497
+  mods:
+    enabled: true
+    syncFromSave: true
+  account:
+    username: your-factorio.com-username
+    token: "your-factorio.com-token"
+  resources:
+    requests:
+      memory: 4096Mi
+      cpu: 2000m
+    limits:
+      memory: 4096Mi
+      cpu: 2000m

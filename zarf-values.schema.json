@@ -1,0 +1,833 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "factorio": {
+      "properties": {
+        "account": {
+          "properties": {
+            "accountSecret": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "token": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "admin_list": {
+          "type": "array"
+        },
+        "affinity": {
+          "properties": {},
+          "type": "object"
+        },
+        "ban_list": {
+          "type": "array"
+        },
+        "factorioServer": {
+          "properties": {
+            "bindAddress": {
+              "type": "string"
+            },
+            "generate_new_save": {
+              "type": "boolean"
+            },
+            "load_latest_save": {
+              "type": "boolean"
+            },
+            "port": {},
+            "save_name": {
+              "type": "string"
+            },
+            "update_mods_on_start": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "import_save": {
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "reimport_every_time": {
+              "type": "boolean"
+            },
+            "reimport_on_change": {
+              "type": "boolean"
+            },
+            "source_url": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "map_gen_settings": {
+          "properties": {
+            "autoplace_controls": {
+              "properties": {
+                "coal": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "richness": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "copper-ore": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "richness": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "crude-oil": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "richness": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "enemy-base": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "iron-ore": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "richness": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "stone": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "richness": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "trees": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "uranium-ore": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "richness": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "water": {
+                  "properties": {
+                    "frequency": {
+                      "type": "number"
+                    },
+                    "size": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "cliff_settings": {
+              "properties": {
+                "cliff_elevation_0": {
+                  "type": "number"
+                },
+                "cliff_elevation_interval": {
+                  "type": "number"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "richness": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "height": {
+              "type": "number"
+            },
+            "peaceful_mode": {
+              "type": "boolean"
+            },
+            "property_expression_names": {
+              "properties": {
+                "control:aux:bias": {
+                  "type": "string"
+                },
+                "control:aux:frequency": {
+                  "type": "string"
+                },
+                "control:moisture:bias": {
+                  "type": "string"
+                },
+                "control:moisture:frequency": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "seed": {},
+            "starting_area": {
+              "type": "number"
+            },
+            "starting_points": {
+              "items": {
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "width": {
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "map_settings": {
+          "properties": {
+            "asteroids": {
+              "properties": {
+                "max_ray_portals_expanded_per_tick": {
+                  "type": "number"
+                },
+                "spawning_rate": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "difficulty_settings": {
+              "properties": {
+                "spoil_time_modifier": {
+                  "type": "number"
+                },
+                "technology_price_multiplier": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "enemy_evolution": {
+              "properties": {
+                "destroy_factor": {
+                  "type": "number"
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "pollution_factor": {
+                  "type": "number"
+                },
+                "time_factor": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "enemy_expansion": {
+              "properties": {
+                "building_coefficient": {
+                  "type": "number"
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "enemy_building_influence_radius": {
+                  "type": "number"
+                },
+                "friendly_base_influence_radius": {
+                  "type": "number"
+                },
+                "max_colliding_tiles_coefficient": {
+                  "type": "number"
+                },
+                "max_expansion_cooldown": {
+                  "type": "number"
+                },
+                "max_expansion_distance": {
+                  "type": "number"
+                },
+                "min_expansion_cooldown": {
+                  "type": "number"
+                },
+                "neighbouring_base_chunk_coefficient": {
+                  "type": "number"
+                },
+                "neighbouring_chunk_coefficient": {
+                  "type": "number"
+                },
+                "other_base_coefficient": {
+                  "type": "number"
+                },
+                "settler_group_max_size": {
+                  "type": "number"
+                },
+                "settler_group_min_size": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "max_failed_behavior_count": {
+              "type": "number"
+            },
+            "path_finder": {
+              "properties": {
+                "cache_accept_path_end_distance_ratio": {
+                  "type": "number"
+                },
+                "cache_accept_path_start_distance_ratio": {
+                  "type": "number"
+                },
+                "cache_max_connect_to_cache_steps_multiplier": {
+                  "type": "number"
+                },
+                "cache_path_end_distance_rating_multiplier": {
+                  "type": "number"
+                },
+                "cache_path_start_distance_rating_multiplier": {
+                  "type": "number"
+                },
+                "direct_distance_to_consider_short_request": {
+                  "type": "number"
+                },
+                "enemy_with_different_destination_collision_penalty": {
+                  "type": "number"
+                },
+                "extended_collision_penalty": {
+                  "type": "number"
+                },
+                "fwd2bwd_ratio": {
+                  "type": "number"
+                },
+                "general_entity_collision_penalty": {
+                  "type": "number"
+                },
+                "general_entity_subsequent_collision_penalty": {
+                  "type": "number"
+                },
+                "goal_pressure_ratio": {
+                  "type": "number"
+                },
+                "ignore_moving_enemy_collision_distance": {
+                  "type": "number"
+                },
+                "long_cache_min_cacheable_distance": {
+                  "type": "number"
+                },
+                "long_cache_size": {
+                  "type": "number"
+                },
+                "max_clients_to_accept_any_new_request": {
+                  "type": "number"
+                },
+                "max_clients_to_accept_short_new_request": {
+                  "type": "number"
+                },
+                "max_steps_worked_per_tick": {
+                  "type": "number"
+                },
+                "max_work_done_per_tick": {
+                  "type": "number"
+                },
+                "min_steps_to_check_path_find_termination": {
+                  "type": "number"
+                },
+                "negative_cache_accept_path_end_distance_ratio": {
+                  "type": "number"
+                },
+                "negative_cache_accept_path_start_distance_ratio": {
+                  "type": "number"
+                },
+                "negative_path_cache_delay_interval": {
+                  "type": "number"
+                },
+                "overload_levels": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "type": "array"
+                },
+                "overload_multipliers": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "type": "array"
+                },
+                "short_cache_min_algo_steps_to_cache": {
+                  "type": "number"
+                },
+                "short_cache_min_cacheable_distance": {
+                  "type": "number"
+                },
+                "short_cache_size": {
+                  "type": "number"
+                },
+                "short_request_max_steps": {
+                  "type": "number"
+                },
+                "short_request_ratio": {
+                  "type": "number"
+                },
+                "stale_enemy_with_same_destination_collision_penalty": {
+                  "type": "number"
+                },
+                "start_to_goal_cost_multiplier_to_terminate_path_find": {
+                  "type": "number"
+                },
+                "use_path_cache": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "pollution": {
+              "properties": {
+                "ageing": {
+                  "type": "number"
+                },
+                "diffusion_ratio": {
+                  "type": "number"
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "enemy_attack_pollution_consumption_modifier": {
+                  "type": "number"
+                },
+                "expected_max_per_chunk": {
+                  "type": "number"
+                },
+                "max_pollution_to_restore_trees": {
+                  "type": "number"
+                },
+                "min_pollution_to_damage_trees": {
+                  "type": "number"
+                },
+                "min_to_diffuse": {
+                  "type": "number"
+                },
+                "min_to_show_per_chunk": {
+                  "type": "number"
+                },
+                "pollution_per_tree_damage": {
+                  "type": "number"
+                },
+                "pollution_restored_per_tree_damage": {
+                  "type": "number"
+                },
+                "pollution_with_max_forest_damage": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "steering": {
+              "properties": {
+                "default": {
+                  "properties": {
+                    "force_unit_fuzzy_goto_behavior": {
+                      "type": "boolean"
+                    },
+                    "radius": {
+                      "type": "number"
+                    },
+                    "separation_factor": {
+                      "type": "number"
+                    },
+                    "separation_force": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "moving": {
+                  "properties": {
+                    "force_unit_fuzzy_goto_behavior": {
+                      "type": "boolean"
+                    },
+                    "radius": {
+                      "type": "number"
+                    },
+                    "separation_factor": {
+                      "type": "number"
+                    },
+                    "separation_force": {
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "unit_group": {
+              "properties": {
+                "max_gathering_unit_groups": {
+                  "type": "number"
+                },
+                "max_group_gathering_time": {
+                  "type": "number"
+                },
+                "max_group_member_fallback_factor": {
+                  "type": "number"
+                },
+                "max_group_radius": {
+                  "type": "number"
+                },
+                "max_group_slowdown_factor": {
+                  "type": "number"
+                },
+                "max_member_slowdown_when_ahead": {
+                  "type": "number"
+                },
+                "max_member_speedup_when_behind": {
+                  "type": "number"
+                },
+                "max_unit_group_size": {
+                  "type": "number"
+                },
+                "max_wait_time_for_late_members": {
+                  "type": "number"
+                },
+                "member_disown_distance": {
+                  "type": "number"
+                },
+                "min_group_gathering_time": {
+                  "type": "number"
+                },
+                "min_group_radius": {
+                  "type": "number"
+                },
+                "tick_tolerance_when_member_arrives": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "mods": {
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "portal": {
+              "type": "array"
+            },
+            "syncFromSave": {
+              "type": "boolean"
+            },
+            "unofficial": {
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "nodeSelector": {
+          "properties": {},
+          "type": "object"
+        },
+        "persistence": {
+          "properties": {
+            "annotations": {
+              "properties": {},
+              "type": "object"
+            },
+            "dataDir": {
+              "properties": {
+                "Size": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "storageClassName": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "pgid": {
+          "type": "number"
+        },
+        "puid": {
+          "type": "number"
+        },
+        "rcon": {
+          "properties": {
+            "external": {
+              "type": "boolean"
+            },
+            "password": {
+              "type": "string"
+            },
+            "passwordSecret": {
+              "type": "string"
+            },
+            "port": {
+              "type": "number"
+            },
+            "serviceAnnotations": {
+              "properties": {},
+              "type": "object"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "replicaCount": {
+          "type": "number"
+        },
+        "resources": {
+          "properties": {
+            "limits": {
+              "properties": {},
+              "type": "object"
+            },
+            "requests": {
+              "properties": {
+                "cpu": {
+                  "type": "string"
+                },
+                "memory": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "saveImport": {
+          "properties": {
+            "overwrite": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "serverPassword": {
+          "properties": {
+            "game_password": {
+              "type": "string"
+            },
+            "passwordSecret": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "server_settings": {
+          "properties": {
+            "afk_autokick_interval": {
+              "type": "number"
+            },
+            "allow_commands": {
+              "type": "string"
+            },
+            "auto_pause": {
+              "type": "boolean"
+            },
+            "autosave_interval": {
+              "type": "number"
+            },
+            "autosave_only_on_server": {
+              "type": "boolean"
+            },
+            "autosave_slots": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "ignore_player_limit_for_returning_players": {
+              "type": "boolean"
+            },
+            "max_players": {
+              "type": "number"
+            },
+            "max_upload_in_kilobytes_per_second": {
+              "type": "number"
+            },
+            "max_upload_slots": {
+              "type": "number"
+            },
+            "maximum_segment_size": {
+              "type": "number"
+            },
+            "maximum_segment_size_peer_count": {
+              "type": "number"
+            },
+            "minimum_latency_in_ticks": {
+              "type": "number"
+            },
+            "minimum_segment_size": {
+              "type": "number"
+            },
+            "minimum_segment_size_peer_count": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "non_blocking_saving": {
+              "type": "boolean"
+            },
+            "only_admins_can_pause_the_game": {
+              "type": "boolean"
+            },
+            "require_user_verification": {
+              "type": "boolean"
+            },
+            "tags": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "visibility": {
+              "properties": {
+                "lan": {
+                  "type": "boolean"
+                },
+                "public": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "service": {
+          "properties": {
+            "annotations": {
+              "properties": {},
+              "type": "object"
+            },
+            "hostNetwork": {
+              "type": "boolean"
+            },
+            "port": {
+              "type": "number"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "strategy": {
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "tolerations": {
+          "type": "array"
+        },
+        "white_list": {
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "saveImport": {
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "image": {
+          "type": "string"
+        },
+        "overwrite": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

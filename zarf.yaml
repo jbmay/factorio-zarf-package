@@ -1,0 +1,69 @@
+kind: ZarfPackageConfig
+metadata:
+  name: factorio
+  description: Factorio with optional Dockerless local save import
+  version: 2.1.24-build.3
+variables:
+  - name: SAVE_PATH
+    description: Optional absolute directory containing Factorio save ZIP files
+    default: ""
+    prompt: false
+values:
+  files:
+    - zarf-values.yaml
+  schema: zarf-values.schema.json
+components:
+  - name: save-oci-builder
+    required: true
+    files:
+      - source: scripts/build-save-oci.sh
+        target: /tmp/factorio-zarf-build-save-oci.sh
+        executable: true
+  - name: factorio
+    required: true
+    charts:
+      - name: factorio
+        releaseName: factorio
+        namespace: factorio
+        version: 1.4.0
+        localPath: ../game-helm-charts/charts/factorio
+        valuesFiles:
+          - helm-values.yaml
+        values:
+          - sourcePath: .factorio
+            targetPath: .
+            excludePaths:
+              - .factorio.image
+              - .factorio.imagePullSecrets
+              - .factorio.securityContext
+              - .factorio.podSecurityContext
+              - .factorio.initContainerSecurityContext
+              - .factorio.saveImport.enabled
+              - .factorio.saveImport.image
+          - sourcePath: .saveImport
+            targetPath: .saveImport
+    images:
+      - docker.io/factoriotools/factorio:2.1.24
+    actions:
+      onDeploy:
+        before:
+          - cmd: /tmp/factorio-zarf-build-save-oci.sh ./zarf "${ZARF_VAR_SAVE_PATH}"
+            setVariables:
+              - name: SAVE_IMAGE_REFERENCE
+          - cmd: |
+              if [ -n "${ZARF_VAR_SAVE_IMAGE_REFERENCE}" ]; then
+                printf '%s\n' true
+              else
+                printf '%s\n' false
+              fi
+            setValues:
+              - key: .saveImport.enabled
+                type: yaml
+          - cmd: printf '%s\n' "${ZARF_VAR_SAVE_IMAGE_REFERENCE}"
+            setValues:
+              - key: .saveImport.image
+    healthChecks:
+      - name: factorio
+        namespace: factorio
+        apiVersion: apps/v1
+        kind: Deployment

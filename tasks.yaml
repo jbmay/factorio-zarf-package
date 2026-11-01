@@ -1,0 +1,17 @@
+variables:
+  - name: ARCHITECTURE
+    default: amd64
+tasks:
+  - name: default
+    actions:
+      - task: build
+  - name: build
+    description: Build the Factorio package in build/
+    actions:
+      - task: clean
+      - cmd: mkdir -p build
+      - cmd: zarf package create . --architecture "${ARCHITECTURE}" --output build --confirm
+  - name: clean
+    description: Remove generated package artifacts
+    actions:
+      - cmd: rm -rf -- ./build
