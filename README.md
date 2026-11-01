@@ -60,6 +60,20 @@ the Factorio image. No sibling chart checkout is required. Artifacts go in
 ignored `build/`; remove them with `maru run clean`. No saves are included at
 build time.
 
+## Automated image updates
+
+Enable the Renovate GitHub App for this repository to use `renovate.json`.
+Renovate updates the versioned Factorio image in both `zarf.yaml` and
+`helm-values.yaml` in one PR. Local deployment credentials, saves, and generated
+build artifacts are not scanned. Automerge is disabled.
+
+Numeric image tags can include experimental Factorio releases: check upstream
+stable status and save, client, and mod compatibility before merging. Renovate
+also updates the game-version prefix in `zarf.yaml` and README package
+references, preserving the package's independent `build.N` suffix.
+If a package change leaves the game version unchanged, increment `build.N`
+manually; CI skips already-published versions.
+
 ## CI publication
 
 Pull requests run `maru run build` and upload the AMD64 package as a GitHub

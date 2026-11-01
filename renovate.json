@@ -1,0 +1,70 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "custom.regex"
+  ],
+  "dependencyDashboard": true,
+  "automerge": false,
+  "pinDigests": false,
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "groupName": "package images",
+      "groupSlug": "package-images"
+    }
+  ],
+  "prBodyNotes": [
+    "Renovate updates the package game-version prefix and README references while preserving the package build.N suffix. If only an image build or TShock changes and the game version stays the same, manually increment package build.N and README package references before merging. Verify the Maru build; published package versions are not overwritten.",
+    "Review Factorio save, client, and mod compatibility before deploying a new game version. Numeric image tags may include experimental releases; check upstream stable status before merging."
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Keep all docker.io/factoriotools/factorio image references synchronized",
+      "managerFilePatterns": [
+        "/^(?:zarf|values|helm-values|deploy-values\\.example|deploy-values\\.vanilla)\\.yaml$/",
+        "/^values\\.schema\\.json$/"
+      ],
+      "matchStrings": [
+        "-\\s+docker\\.io/factoriotools/factorio:(?<currentValue>[A-Za-z0-9_.-]+)",
+        "repository:\\s*[\"']?factoriotools/factorio[\"']?\\s+tag:\\s*[\"']?(?<currentValue>[A-Za-z0-9_.-]+)",
+        "\"repository\":\\s*\\{\\s*\"const\":\\s*\"docker\\.io/factoriotools/factorio\"\\s*\\},\\s*\"tag\":\\s*\\{\\s*\"const\":\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "depNameTemplate": "docker.io/factoriotools/factorio",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the package game version while preserving its independent build.N suffix",
+      "managerFilePatterns": [
+        "/^zarf\\.yaml$/"
+      ],
+      "matchStrings": [
+        "version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)-build\\.\\d+"
+      ],
+      "depNameTemplate": "docker.io/factoriotools/factorio",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Keep README package versions aligned with the game version",
+      "managerFilePatterns": [
+        "/^README\\.md$/"
+      ],
+      "matchStrings": [
+        "(?<currentValue>\\d+\\.\\d+\\.\\d+)-build\\.\\d+",
+        "Packages Factorio `(?<currentValue>\\d+\\.\\d+\\.\\d+)`"
+      ],
+      "depNameTemplate": "docker.io/factoriotools/factorio",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    }
+  ]
+}
