@@ -26,7 +26,7 @@ components:
         releaseName: factorio
         namespace: factorio
         version: 1.4.0
-        localPath: ../game-helm-charts/charts/factorio
+        url: oci://ghcr.io/jbmay/helm-charts/factorio
         valuesFiles:
           - helm-values.yaml
         values:

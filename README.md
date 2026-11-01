@@ -54,10 +54,11 @@ Keep a backup before allowing the upgraded server to save it.
 
 ## Build
 
-Keep this directory next to `game-helm-charts`, then run `maru run build`.
-The package embeds the local Factorio chart with its new save-import support;
-publishing that updated chart first is unnecessary. Artifacts go in ignored
-`build/`; remove them with `maru run clean`. No saves are included at build time.
+Run `maru run build` from this directory. The package downloads chart version
+`1.4.0` from `oci://ghcr.io/jbmay/helm-charts/factorio` and embeds it alongside
+the Factorio image. No sibling chart checkout is required. Artifacts go in
+ignored `build/`; remove them with `maru run clean`. No saves are included at
+build time.
 
 ## Deploy
 
