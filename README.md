@@ -60,6 +60,27 @@ the Factorio image. No sibling chart checkout is required. Artifacts go in
 ignored `build/`; remove them with `maru run clean`. No saves are included at
 build time.
 
+## CI publication
+
+Pull requests run `maru run build` and upload the AMD64 package as a GitHub
+Actions artifact retained for seven days. Pushes to `main` and manual publish
+runs check GHCR for the exact package name and version before building. If the
+tag already exists, both build and publish are skipped. Authentication and
+unexpected registry errors fail the workflow rather than permitting a publish.
+
+CI uses Zarf `v0.87.0` and Maru `v0.6.0`. Publication authenticates with the
+repository's `GITHUB_TOKEN` and `packages: write` permission. For this owner,
+the published reference is:
+
+```text
+oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.24-build.3
+```
+
+Increment `build.N` in `zarf.yaml` to publish updated package contents for the
+same Factorio version. Publish runs are serialized to prevent overlapping
+workflow runs from replacing the same version. Save data and local deployment
+credentials are not read by the CI build.
+
 ## Deploy
 
 ```sh

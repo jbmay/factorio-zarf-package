@@ -1,0 +1,113 @@
+name: Publish Zarf package
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-zarf-package
+  cancel-in-progress: false
+
+env:
+  MARU_VERSION: v0.6.0
+  MARU_LINUX_AMD64_SHA256: 61d948a36d5c581f5d90ceba332e68d9e96c4b2b166fa828f42acf2e4bd77c48
+  ZARF_VERSION: v0.87.0
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.0.0
+
+      - name: Install Zarf
+        uses: zarf-dev/setup-zarf@10e539efed02f75ec39eb8823e22a5c795f492ae  # v1.0.1
+        with:
+          version: ${{ env.ZARF_VERSION }}
+
+      - name: Log in to GHCR
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "${GHCR_TOKEN}" | zarf tools registry login ghcr.io --username "${GITHUB_ACTOR}" --password-stdin
+
+      - name: Check for existing package
+        id: package
+        shell: bash
+        run: |
+          package_name=$(zarf tools yq -r '.metadata.name' zarf.yaml)
+          package_version=$(zarf tools yq -r '.metadata.version' zarf.yaml)
+
+          if [ -z "${package_name}" ] || [ "${package_name}" = "null" ]; then
+            echo "Package metadata.name is missing" >&2
+            exit 1
+          fi
+          if [ -z "${package_version}" ] || [ "${package_version}" = "null" ]; then
+            echo "Package metadata.version is missing" >&2
+            exit 1
+          fi
+          if [[ ! "${package_version}" =~ -build\.[0-9]+$ ]]; then
+            echo "Package metadata.version must end with -build.N" >&2
+            exit 1
+          fi
+
+          package_reference="ghcr.io/${GITHUB_REPOSITORY_OWNER}/zarf-packages/${package_name}:${package_version}"
+          echo "reference=oci://${package_reference}" >> "${GITHUB_OUTPUT}"
+
+          set +e
+          lookup_output=$(zarf tools registry digest "${package_reference}" 2>&1)
+          lookup_status=$?
+          set -e
+
+          if [ "${lookup_status}" -eq 0 ]; then
+            echo "exists=true" >> "${GITHUB_OUTPUT}"
+            echo "Skipping existing package: oci://${package_reference}"
+            exit 0
+          fi
+
+          case "${lookup_output}" in
+            *MANIFEST_UNKNOWN*|*"manifest unknown"*|*NAME_UNKNOWN*|*"name unknown"*)
+              echo "exists=false" >> "${GITHUB_OUTPUT}"
+              echo "Package tag is available: oci://${package_reference}"
+              ;;
+            *)
+              echo "Unable to determine whether the package already exists:" >&2
+              echo "${lookup_output}" >&2
+              exit "${lookup_status}"
+              ;;
+          esac
+
+      - name: Install Maru
+        if: steps.package.outputs.exists == 'false'
+        shell: bash
+        run: |
+          maru_path="${RUNNER_TEMP}/bin/maru"
+          mkdir -p "$(dirname "${maru_path}")"
+          curl --fail --location --silent --show-error \
+            "https://github.com/defenseunicorns/maru-runner/releases/download/${MARU_VERSION}/maru-runner_${MARU_VERSION}_Linux_amd64" \
+            --output "${maru_path}"
+          echo "${MARU_LINUX_AMD64_SHA256}  ${maru_path}" | sha256sum --check --status
+          chmod 0755 "${maru_path}"
+          echo "$(dirname "${maru_path}")" >> "${GITHUB_PATH}"
+
+      - name: Build package
+        if: steps.package.outputs.exists == 'false'
+        run: maru run build --set ARCHITECTURE=amd64
+
+      - name: Publish package
+        if: steps.package.outputs.exists == 'false'
+        shell: bash
+        run: |
+          package_path=$(find build -maxdepth 1 -type f -name 'zarf-package-*.tar.zst' -print -quit)
+          if [ -z "${package_path}" ]; then
+            echo "No Zarf package was produced in build/" >&2
+            exit 1
+          fi
+          zarf package publish "${package_path}" \
+            "oci://ghcr.io/${GITHUB_REPOSITORY_OWNER}/zarf-packages" \
+            --confirm

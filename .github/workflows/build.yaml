@@ -1,0 +1,48 @@
+name: Build Zarf package
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  MARU_VERSION: v0.6.0
+  MARU_LINUX_AMD64_SHA256: 61d948a36d5c581f5d90ceba332e68d9e96c4b2b166fa828f42acf2e4bd77c48
+  ZARF_VERSION: v0.87.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.0.0
+
+      - name: Install Zarf
+        uses: zarf-dev/setup-zarf@10e539efed02f75ec39eb8823e22a5c795f492ae  # v1.0.1
+        with:
+          version: ${{ env.ZARF_VERSION }}
+
+      - name: Install Maru
+        shell: bash
+        run: |
+          maru_path="${RUNNER_TEMP}/bin/maru"
+          mkdir -p "$(dirname "${maru_path}")"
+          curl --fail --location --silent --show-error \
+            "https://github.com/defenseunicorns/maru-runner/releases/download/${MARU_VERSION}/maru-runner_${MARU_VERSION}_Linux_amd64" \
+            --output "${maru_path}"
+          echo "${MARU_LINUX_AMD64_SHA256}  ${maru_path}" | sha256sum --check --status
+          chmod 0755 "${maru_path}"
+          echo "$(dirname "${maru_path}")" >> "${GITHUB_PATH}"
+
+      - name: Build package
+        run: maru run build --set ARCHITECTURE=amd64
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
+        with:
+          name: factorio-zarf-package-amd64
+          path: build/zarf-package-*.tar.zst
+          if-no-files-found: error
+          retention-days: 7
