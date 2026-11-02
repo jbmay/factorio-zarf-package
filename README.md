@@ -4,9 +4,24 @@ Packages Factorio `2.1.24` as `2.1.24-build.3`, matching the chart's current
 application version. Use compatible clients and saves. Saves from newer game
 versions generally cannot be loaded by older servers.
 
-Requires current Zarf and Maru, an initialized Zarf cluster, and (for imports)
-Kubernetes image-volume support, generally available in Kubernetes 1.35.
-The namespace must permit root init containers to prepare PVC ownership.
+## Prerequisites
+
+### Deployment
+
+- The latest Zarf release
+- A cluster initialized with Zarf
+- For optional import, Kubernetes image-volume support, generally available
+  in Kubernetes 1.35
+- A namespace that permits root init containers to prepare PVC ownership
+- For optional import, an absolute local directory containing `.zip` saves
+
+### Local builds (optional)
+
+- The latest Zarf release
+- Maru
+
+Maru is only required to build the package locally. Deploying the published
+package does not require a local build.
 
 ## Synchronize mods from a save
 
@@ -29,7 +44,7 @@ Use the Mod Portal token, not your account password. The example includes all
 these fields. Deploy using only your local values file:
 
 ```sh
-zarf package deploy build/zarf-package-factorio-amd64-2.1.24-build.3.tar.zst \
+zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.24-build.3 \
   --values deploy-values.local.yaml \
   --set-variables SAVE_PATH=/absolute/path/to/saves --confirm
 ```
@@ -52,7 +67,7 @@ sync behavior; it does not promise preservation of historical mod versions.
 Review mod compatibility before upgrading an existing save from 2.0 to 2.1.
 Keep a backup before allowing the upgraded server to save it.
 
-## Build
+## Build locally (optional)
 
 Run `maru run build` from this directory. The package downloads chart version
 `1.4.0` from `oci://ghcr.io/jbmay/helm-charts/factorio` and embeds it alongside
@@ -97,7 +112,7 @@ credentials are not read by the CI build.
 
 ```sh
 cp deploy-values.example.yaml deploy-values.local.yaml
-zarf package deploy build/zarf-package-factorio-amd64-2.1.24-build.3.tar.zst \
+zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.24-build.3 \
   --values deploy-values.local.yaml --confirm
 ```
 
@@ -108,7 +123,7 @@ including autosaves. To choose a particular imported save, set
 `factorio.factorioServer.save_name` to its filename without `.zip`. Deploy with:
 
 ```sh
-zarf package deploy build/zarf-package-factorio-amd64-2.1.24-build.3.tar.zst \
+zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.24-build.3 \
   --values deploy-values.local.yaml \
   --set-variables SAVE_PATH=/absolute/path/to/saves --confirm
 ```
