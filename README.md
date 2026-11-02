@@ -62,15 +62,13 @@ build time.
 
 ## Automated image updates
 
-Enable the Renovate GitHub App for this repository to use `renovate.json`.
 Renovate updates the versioned Factorio image in both `zarf.yaml` and
-`helm-values.yaml` in one PR. Local deployment credentials, saves, and generated
-build artifacts are not scanned. Automerge is disabled.
+`helm-values.yaml` in one PR.
 
 Numeric image tags can include experimental Factorio releases: check upstream
-stable status and save, client, and mod compatibility before merging. Renovate
-also updates the game-version prefix in `zarf.yaml` and README package
-references, preserving the package's independent `build.N` suffix.
+stable status and save, client, and mod compatibility before deploying an updated 
+version. Renovate also updates the game-version prefix in `zarf.yaml` and README
+package references, preserving the package's independent `build.N` suffix.
 If a package change leaves the game version unchanged, increment `build.N`
 manually; CI skips already-published versions.
 
@@ -173,7 +171,7 @@ the public server list will fail even though direct connection to the node IP
 and NodePort works. Successful registration does not prove the advertised
 endpoint is reachable.
 
-We reproduced this with Flannel v0.27.4's default masquerading behavior on
+This was reproduced this with Flannel v0.27.4's default masquerading behavior on
 Talos: Factorio listened on UDP port 31497 and the NodePort was also 31497, but
 the ping-pong servers reported different random external ports. Logs contained
 `Received own address message reply with conflicting address` and
@@ -200,10 +198,7 @@ cluster:
 
 Preserve any existing Flannel extra arguments. This is a cluster networking
 setting, not a Factorio Helm value; neither this chart nor the Zarf package
-applies it automatically. Ensure the running Flannel DaemonSet receives the
-argument and its active masquerade rules no longer contain `--random-fully`.
-In our existing Talos cluster, the live DaemonSet also needed updating after
-the machine-config patch. Save the game and restart Factorio afterward to test
+applies it automatically. Save the game and restart Factorio afterward to test
 fresh address discovery; existing NAT mappings can retain old ports.
 
 Disabling full randomization lets NAT preserve source ports where possible,
