@@ -1,6 +1,6 @@
 # Factorio Zarf package
 
-Packages Factorio `2.1.24` as `2.1.24-build.3`, matching the chart's current
+Packages Factorio `2.1.25` as `2.1.25-build.3`, matching the chart's current
 application version. Use compatible clients and saves. Saves from newer game
 versions generally cannot be loaded by older servers.
 
@@ -44,7 +44,7 @@ Use the Mod Portal token, not your account password. The example includes all
 these fields. Deploy using only your local values file:
 
 ```sh
-zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.24-build.3 \
+zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.25-build.3 \
   --values deploy-values.local.yaml \
   --set-variables SAVE_PATH=/absolute/path/to/saves --confirm
 ```
@@ -100,7 +100,7 @@ repository's `GITHUB_TOKEN` and `packages: write` permission. For this owner,
 the published reference is:
 
 ```text
-oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.24-build.3
+oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.25-build.3
 ```
 
 Increment `build.N` in `zarf.yaml` to publish updated package contents for the
@@ -112,7 +112,7 @@ credentials are not read by the CI build.
 
 ```sh
 cp deploy-values.example.yaml deploy-values.local.yaml
-zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.24-build.3 \
+zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.25-build.3 \
   --values deploy-values.local.yaml --confirm
 ```
 
@@ -123,7 +123,7 @@ including autosaves. To choose a particular imported save, set
 `factorio.factorioServer.save_name` to its filename without `.zip`. Deploy with:
 
 ```sh
-zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.24-build.3 \
+zarf package deploy oci://ghcr.io/jbmay/zarf-packages/factorio:2.1.25-build.3 \
   --values deploy-values.local.yaml \
   --set-variables SAVE_PATH=/absolute/path/to/saves --confirm
 ```

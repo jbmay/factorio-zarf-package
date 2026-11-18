@@ -2,7 +2,7 @@ kind: ZarfPackageConfig
 metadata:
   name: factorio
   description: Factorio with optional Dockerless local save import
-  version: 2.1.24-build.3
+  version: 2.1.25-build.3
 variables:
   - name: SAVE_PATH
     description: Optional absolute directory containing Factorio save ZIP files
@@ -43,7 +43,7 @@ components:
           - sourcePath: .saveImport
             targetPath: .saveImport
     images:
-      - docker.io/factoriotools/factorio:2.1.24
+      - docker.io/factoriotools/factorio:2.1.25
     actions:
       onDeploy:
         before:
